@@ -13,6 +13,7 @@ const {
   skill,
   brush,
   notice,
+  failed,
   battle,
   actor,
   locked,
@@ -36,7 +37,12 @@ const {
       <nav>
         <span class="nav-active">战术指挥台</span><span>本地演练 / 07</span>
       </nav>
-      <button @click="reset">↻ 重新部署</button>
+      <div class="header-actions">
+        <button :class="{ alert: failed }" @click="reset">↻ 重新部署</button>
+        <p v-if="failed" class="header-alert" role="status">
+          ⚠ 保存失败，操作已回退 · 详见指令面板提示
+        </p>
+      </div>
     </header>
     <div class="mission">
       <div>
@@ -89,6 +95,7 @@ const {
           :skill="skill"
           :locked="locked"
           :notice="notice"
+          :failed="failed"
           @skill="
             skill = $event;
             brush = null;

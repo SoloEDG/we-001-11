@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import type { Unit } from "../../../shared/types";
 import { skillBook } from "../model/skills";
-defineProps<{ unit: Unit; skill: string; locked: boolean; notice: string }>();
+defineProps<{
+  unit: Unit;
+  skill: string;
+  locked: boolean;
+  notice: string;
+  failed: boolean;
+}>();
 defineEmits<{ skill: [id: string]; wait: [] }>();
 </script>
 <template>
@@ -33,6 +39,6 @@ defineEmits<{ skill: [id: string]; wait: [] }>();
     <button class="primary end-turn" :disabled="locked" @click="$emit('wait')">
       结束行动 <span>→</span>
     </button>
-    <p class="notice" role="status">{{ notice }}</p>
+    <p :class="['notice', { alert: failed }]" role="status">{{ notice }}</p>
   </section>
 </template>
